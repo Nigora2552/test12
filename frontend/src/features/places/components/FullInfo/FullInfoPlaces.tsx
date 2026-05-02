@@ -1,0 +1,46 @@
+import {useAppDispatch, useAppSelector} from "../../../../app/hooks.ts";
+import {selectLoading, selectPlace} from "../../placesSelector.ts";
+import {selectImages} from "../../../images/imagesSelector.ts";
+import {selectReviews} from "../../../reviews/reviewsSelector.ts";
+import {useEffect} from "react";
+import {getAllPlaces} from "../../placesThunk.ts";
+import {getReviews} from "../../../reviews/reviewsThunk.ts";
+import {getAllImages} from "../../../images/imagesThunk.ts";
+import {Box, CircularProgress} from "@mui/material";
+import InfoAboutPlace from "./InfoAboutPlace.tsx";
+
+const FullInfoPlaces = () => {
+    const dispatch = useAppDispatch();
+    const places = useAppSelector(selectPlace);
+    const images = useAppSelector(selectImages);
+    const reviews = useAppSelector(selectReviews);
+    const loading = useAppSelector(selectLoading);
+
+    useEffect(() => {
+        dispatch(getAllPlaces());
+        dispatch(getReviews());
+        dispatch((getAllImages()));
+    }, []);
+    return (
+        <div style={{margin: '0 auto'}}>
+            <h1 style={{textAlign: 'center'}}>Afterlife</h1>
+            <div style={{display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: '20px'}}>
+                {loading && <CircularProgress/>}
+                {!loading && places.length > 0 &&
+                    <>
+                        {places.map(place => (
+                            <InfoAboutPlace key={place._id} place={place}/>
+                        ))}
+                    </>}
+            </div>
+            <h3 style={{textAlign: 'center'}}>Gallery</h3>
+            {images && images.length > 0 &&
+            <>
+            </>
+            }
+        </div>
+
+    );
+};
+
+export default FullInfoPlaces;

@@ -7,7 +7,7 @@ import {ToastContainer} from "react-toastify";
 import NavBar from "./components/UI/NavBar/NavBar.tsx";
 import {CssBaseline} from "@mui/material";
 import Places from "./features/places/components/Places.tsx";
-import FullInfoPlaces from "./features/places/components/FullInfoPlaces.tsx";
+import FullInfoPlaces from "./features/places/components/FullInfo/FullInfoPlaces.tsx";
 import PlacesForm from "./features/places/components/PlacesForm.tsx";
 
 const App = () => {
