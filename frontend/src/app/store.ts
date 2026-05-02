@@ -1,6 +1,7 @@
 import {combineReducers, configureStore} from "@reduxjs/toolkit";
 import {userReducer} from "../features/users/usersSlice.ts";
 import {FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE} from 'redux-persist';
+import {placeReducer} from "../features/places/placesSlice.ts";
 
 
 
@@ -21,7 +22,8 @@ const userPersistConfig = {
 };
 
 const rootReducer = combineReducers({
-    users: persistReducer(userPersistConfig, userReducer)
+    users: persistReducer(userPersistConfig, userReducer),
+    places: placeReducer,
 })
 
 export const store = configureStore({

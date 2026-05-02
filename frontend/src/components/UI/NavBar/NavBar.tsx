@@ -19,7 +19,7 @@ const NavBar = () => {
                     <Grid   sx={{width: '100%',display: 'flex',justifyContent:'space-between', alignItems:'center'}}>
                         <Typography component={NavLink} to='/'
                                     sx={{flexGrow: 1, textDecoration: 'none', color: 'white'}}>
-                            Cocktails builder
+                           Cafe critic
                         </Typography>
                         <Grid sx={{display:'flex', alignItems: 'center'}}>
                             {user ? <UserMenu user={user}/> : <AnonymousMenu/>}

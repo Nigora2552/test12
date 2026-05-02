@@ -1,10 +1,9 @@
-import {Button} from "@mui/material";
+import {Button, Menu, MenuItem} from "@mui/material";
 import type {User} from "../../../types";
 import {useState} from "react";
 import {useAppDispatch} from "../../../app/hooks.ts";
 import {logout} from "../../../features/users/usersThunks.ts";
-import noPhoto from "../../../assets/noPhoto.jpeg";
-import {apiUrl} from "../../../constants.ts";
+import { NavLink } from "react-router-dom";
 
 interface Props {
     user: User;
@@ -12,40 +11,40 @@ interface Props {
 
 const UserMenu: React.FC<Props> = ({user}) => {
     const dispatch = useAppDispatch()
-    const [_anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
-    const handleClick = (e: React.MouseEvent<HTMLElement>) => {
-        setAnchorEl(e.currentTarget)
+    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+        setAnchorEl(event.currentTarget);
     };
 
-    const handleLogout = () => {
-        dispatch(logout())
-    }
-    let userAvatar = noPhoto;
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
-    if (user && user.avatar) {
-        if (user.avatar.startsWith('http')) {
-            userAvatar = user.avatar;
-        } else {
-            userAvatar = `${apiUrl}/${user.avatar}`;
-        }
-    }
+    const handleLogout = async () => {
+        dispatch(logout());
+    };
+
     return (
         <>
             <Button
                 onClick={handleClick}
-                color='inherit'
+                color="inherit"
             >
-                Hello, {user.displayName}
+                Hello, {user.username}
             </Button>
-            <img
-                style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover' }}
-                src={ userAvatar} alt={user.displayName}/>
-            <span style={{margin: '0 10px'}}>or</span>
-            <Button
+            <Menu
+                anchorEl={anchorEl}
+                keepMounted
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
             >
-                <span onClick={handleLogout} style={{color: 'white'}}>Logout</span>
-            </Button>
+                {user && user.role === 'admin' && <MenuItem>
+                    <NavLink to='/admin'>Admin panel</NavLink>
+                </MenuItem>
+                }
+                <MenuItem onClick={handleLogout}>Logout</MenuItem>
+            </Menu>
         </>
     );
 };

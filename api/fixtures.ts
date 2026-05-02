@@ -53,14 +53,14 @@ const run = async () => {
 
     const alexPlace = await Place.create({
         user: alex!._id,
-        name: 'Alex',
+        name: 'Дияр',
         image: null,
         description: null,
     });
     const nikaPlaces = await Place.create(
         {
             user: nika!._id,
-            name: 'Nika',
+            name: 'Arzu',
             image: null,
             description: null,
 

@@ -5,28 +5,11 @@ import {toast} from "react-toastify";
 import axiosApi from "../../axiosApi.ts";
 
 
-export const register = createAsyncThunk<User, RegisterMutation, { rejectValue: ValidationError }>(
+export const register = createAsyncThunk<User, RegisterMutation, {rejectValue: ValidationError}>(
     'users/register',
-    async (registerMutation, { rejectWithValue }) => {
+    async (registerMutation, {rejectWithValue}) => {
         try {
-            const formData = new FormData();
-
-            const keys = Object.keys(registerMutation) as (keyof RegisterMutation)[];
-
-            keys.forEach((key) => {
-                const value = registerMutation[key];
-
-                if (value !== null && value !== undefined) {
-                    if (value instanceof File) {
-                        formData.append(key, value);
-                    } else {
-                        formData.append(key, String(value));
-                    }
-                }
-            });
-
-            const response = await axiosApi.post<{ user: User; message: string }>('/users', formData);
-
+            const response = await axiosApi.post<{user: User, message: string}>('/users', registerMutation);
             toast.success(response.data.message);
             return response.data.user;
         } catch (e) {

@@ -8,7 +8,6 @@ import {selectRegisterError, selectRegisterLoading} from "./usersSelectore.ts";
 import {googleLogin, register} from "./usersThunks.ts";
 import {GoogleLogin} from "@react-oauth/google";
 import {toast} from "react-toastify";
-import FileInput from "../../components/UI/FileInput/FileInput.tsx";
 
 
 const Register = () => {
@@ -20,7 +19,6 @@ const Register = () => {
     const [form, setForm] = useState<RegisterMutation>({
         username: '',
         password: '',
-        avatar: null,
     });
 
     const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,17 +40,6 @@ const Register = () => {
             return error?.errors[fieldName].message;
         } catch {
             return undefined;
-        }
-    };
-
-    const fileInputChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const {name, files} = e.target;
-
-        if (files) {
-            setForm(prevState => ({
-                ...prevState,
-                [name]: files[0]
-            }))
         }
     };
 
@@ -109,13 +96,6 @@ const Register = () => {
                                 error={Boolean(getFieldError('password'))}
                                 helperText={getFieldError('password')}
                             />
-                        </Grid>
-                        <Grid size={12}>
-                          <FileInput
-                              label='avatar'
-                              name='avatar'
-                              onChange={fileInputChangeHandler}
-                          />
                         </Grid>
                     </Grid>
                     <Button
