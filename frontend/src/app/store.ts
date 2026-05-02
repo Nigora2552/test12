@@ -3,6 +3,7 @@ import {userReducer} from "../features/users/usersSlice.ts";
 import {FLUSH, PAUSE, PERSIST, persistReducer, persistStore, PURGE, REGISTER, REHYDRATE} from 'redux-persist';
 import {placeReducer} from "../features/places/placesSlice.ts";
 import {reviewsReducer} from "../features/reviews/reviewsSlice.ts";
+import imagesReducer from "../features/images/imagesSlice.ts";
 
 
 
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
     users: persistReducer(userPersistConfig, userReducer),
     places: placeReducer,
     reviews: reviewsReducer,
+    images: imagesReducer,
 })
 
 export const store = configureStore({

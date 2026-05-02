@@ -1,6 +1,7 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import type {Places, PlacesMutation} from "../../types";
 import axiosApi from "../../axiosApi.ts";
+import type {AppDispatch} from "../../app/store.ts";
 
 export const getAllPlaces = createAsyncThunk<Places[], void>(
     'place/getAllPlaces',
@@ -30,14 +31,16 @@ export const create = createAsyncThunk<void,PlacesMutation>(
                 formData.append(key, String(value));
             }
         })
+        formData.append('agreement', 'true');
 
         await axiosApi.post('/places', formData)
     }
 );
 
-export const deletePlace = createAsyncThunk<void, string>(
+export const deletePlace = createAsyncThunk<void, string,{dispatch: AppDispatch}>(
     'place/deletePlace',
-    async (id) => {
+    async (id,thunkAPI) => {
         await axiosApi.delete<Places>(`/places${id}`);
+        await  thunkAPI.dispatch(getAllPlaces());
     }
 );

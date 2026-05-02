@@ -4,17 +4,18 @@ import {useEffect} from "react";
 import {getAllPlaces} from "../placesThunk.ts";
 import {CircularProgress} from "@mui/material";
 import CardPlace from "./CardPlace.tsx";
+import {getReviews} from "../../reviews/reviewsThunk.ts";
 
 
 const Places = () => {
     const dispatch = useAppDispatch();
     const places = useAppSelector(selectPlace);
-const loading = useAppSelector(selectLoading);
+    const loading = useAppSelector(selectLoading);
 
     useEffect(() => {
         dispatch(getAllPlaces())
+        dispatch(getReviews())
     }, []);
-
 
     return (
         <>
@@ -24,6 +25,7 @@ const loading = useAppSelector(selectLoading);
                 {!loading && places.length > 0 &&
                     <>{places.map(place => (
                         <CardPlace key={place._id} place={place}/>
+
                     ))}</>
                 }
             </div>

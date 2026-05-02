@@ -43,24 +43,39 @@ export interface PlacesMutation{
     user: string;
     name: string;
     description: string;
-    image:string;
+    image:  File | null;
 }
 
 export interface IReviews{
+    _id: string,
     user: string | User,
     place: string | Places,
     comment: string,
     qualityFood: number,
     qualityServer: number,
     interior: number,
+    rating: number,
 }
 
 export interface ReviewsMutation {
+    _id: string,
     user: string,
     place: string,
     comment: string,
     qualityFood: number,
     qualityServer: number,
     interior: number,
+}
+export interface IImages{
+    _id: string,
+    user: string | User,
+    place: string | Places,
+    image: string,
+}
+
+export interface ImagesMutation{
+    user: string,
+    place: string,
+    image: File | string,
 }
 

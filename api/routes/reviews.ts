@@ -5,26 +5,26 @@ import Place from "../models/Place";
 
 const reviewsRouter = express.Router();
 
-reviewsRouter.get('/', async (req, res, next) => {
+reviewsRouter.get('/', async (_req, res, next) => {
     try {
-        const places = await Place.find();
+        const places = await Place.find().lean();
 
         const result = [];
         for (const place of places) {
             const reviews = await Review.find({place: place._id});
-
             let overallRating = 0;
 
             if (reviews.length > 0) {
                 const totalSum = reviews.reduce((acc, r) => {
                     return acc + (r.qualityFood + r.qualityServer + r.interior) / 3;
                 }, 0);
-
                 overallRating = totalSum / reviews.length;
             }
+
             result.push({
                 ...place,
-                rating: Number(overallRating.toFixed(1))
+                rating: Number(overallRating.toFixed(1)),
+                reviews: reviews
             });
         }
 

@@ -5,13 +5,23 @@ import {NavLink} from "react-router-dom";
 import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
 import LocalSeeIcon from '@mui/icons-material/LocalSee';
+import {useAppDispatch, useAppSelector} from "../../../app/hooks.ts";
+import {selectReviews} from "../../reviews/reviewsSelector.ts";
+import {useEffect} from "react";
+import {getReviews} from "../../reviews/reviewsThunk.ts";
 
 interface Props {
     place: Places
 }
 
 const CardPlace: React.FC<Props> = ({place}) => {
+const dispatch = useAppDispatch();
+const reviews = useAppSelector(selectReviews);
 
+
+    useEffect(() => {
+        dispatch(getReviews());
+    }, []);
     const image = place.image;
 
     let cardImage = noPhoto;
@@ -28,6 +38,9 @@ const CardPlace: React.FC<Props> = ({place}) => {
                 <Rating name="half-rating" defaultValue={2.5} precision={0.5}/>
                 <Rating name="half-rating-read" defaultValue={2.5} precision={0.5} readOnly/>
             </Stack>
+            { reviews.map(rev => (
+                <p key={rev._id}>({rev.rating} reviews)</p>
+            ))}
             <LocalSeeIcon/>
         </div>
     );
