@@ -3,7 +3,6 @@ import {Error} from "mongoose";
 import User from "../models/User";
 import {OAuth2Client} from "google-auth-library";
 import config from "../config";
-import {imagesUpload} from "../middleware/multer";
 import jwt from "jsonwebtoken";
 
 const usersRouter = express.Router();
@@ -70,8 +69,7 @@ usersRouter.post('/google', async (req, res, next) => {
         if (!payload) return res.status(400).send({error: 'Google login error'});
 
         const email = payload.email;
-        const id = payload.sub; // googleID
-        const displayName = payload.name;
+        const id = payload.sub;
 
         if (!email) return res.status(400).send({error: 'Not enough information from Google'})
 
@@ -164,7 +162,7 @@ usersRouter.delete('/sessions', async (req, res, next) => {
     });
     res.send({message: 'Logged out successfully'});
 });
-usersRouter.post('/token', async (req, res, next) => {
+usersRouter.post('/token', async (req, res) => {
     try {
         const refreshToken = req.cookies.refreshToken;
 
