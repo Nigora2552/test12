@@ -16,7 +16,7 @@ const UserSchema = new mongoose.Schema<HydratedDocument<UserFields>,
     UserModel,
     userMethods,
     {}>({
-    email: {
+    username: {
         type: String,
         required: true,
         unique: true,
@@ -34,26 +34,18 @@ const UserSchema = new mongoose.Schema<HydratedDocument<UserFields>,
     token: {
         type: String,
     },
-    displayName: {
-        type: String,
-        required: true,
-    },
-    avatar: {
-        type: String,
-        default: null,
-    },
     googleID: String,
 
 });
 
-UserSchema.path('email').validate({
+UserSchema.path('username').validate({
     validator: async function (this: Document, value: string) {
-        if (!this.isModified('email')) return true;
+        if (!this.isModified('username')) return true;
 
-        const user = await User.findOne({email: value});
+        const user = await User.findOne({username: value});
         return !user;
     },
-    message: 'Email is already exists.Please choose another one'
+    message: 'Username is already exists.Please choose another one'
 });
 
 UserSchema.methods.checkPassword = function (password: string) {

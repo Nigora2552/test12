@@ -5,7 +5,7 @@ const rootPath = __dirname;
 const config = {
     rootPath,
     publicPath: path.join(rootPath, "public"),
-    db: 'mongodb://localhost/cocktails',
+    db: 'mongodb://localhost/test12',
     jwtSecret: process.env.JWT_SECRET || 'secret',
     refreshSecret:process.env.REFRESH_SECRET || 'secret',
     clientID: process.env.CLIENT_ID || '...',

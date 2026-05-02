@@ -4,9 +4,12 @@ dotenv.config();
 import express from "express";
 import cors from "cors";
 import usersRouter from "./routes/users";
+import placesRouter from "./routes/places";
 import mongoose from "mongoose";
 import config from "./config";
 import cookieParser from "cookie-parser";
+import reviewsRouter from "./routes/reviews";
+import imagesRouter from "./routes/images";
 
 
 const app = express();
@@ -21,6 +24,10 @@ app.use(express.static('public'));
 app.use(express.json())
 
 app.use('/users', usersRouter);
+app.use('/places', placesRouter);
+app.use('/reviews', reviewsRouter);
+app.use('/images', imagesRouter);
+
 
 const run = async () => {
     await mongoose.connect(config.db);
