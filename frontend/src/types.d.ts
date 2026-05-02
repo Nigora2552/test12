@@ -40,9 +40,27 @@ export  interface Places{
 }
 
 export interface PlacesMutation{
-    user: string | User;
+    user: string;
     name: string;
     description: string;
     image:string;
+}
+
+export interface IReviews{
+    user: string | User,
+    place: string | Places,
+    comment: string,
+    qualityFood: number,
+    qualityServer: number,
+    interior: number,
+}
+
+export interface ReviewsMutation {
+    user: string,
+    place: string,
+    comment: string,
+    qualityFood: number,
+    qualityServer: number,
+    interior: number,
 }
 

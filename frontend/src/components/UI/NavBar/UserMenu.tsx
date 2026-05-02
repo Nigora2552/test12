@@ -1,16 +1,19 @@
 import {Button, Menu, MenuItem} from "@mui/material";
 import type {User} from "../../../types";
 import {useState} from "react";
-import {useAppDispatch} from "../../../app/hooks.ts";
+import {useAppDispatch, useAppSelector} from "../../../app/hooks.ts";
 import {logout} from "../../../features/users/usersThunks.ts";
 import { NavLink } from "react-router-dom";
+import {selectUser} from "../../../features/users/usersSelectore.ts";
 
 interface Props {
     user: User;
 }
 
 const UserMenu: React.FC<Props> = ({user}) => {
-    const dispatch = useAppDispatch()
+    const dispatch = useAppDispatch();
+    const users = useAppSelector(selectUser);
+
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -33,6 +36,8 @@ const UserMenu: React.FC<Props> = ({user}) => {
             >
                 Hello, {user.username}
             </Button>
+            {users && <NavLink to='/add-place' style={{color: 'white'}}>Add new place</NavLink>
+            }
             <Menu
                 anchorEl={anchorEl}
                 keepMounted
