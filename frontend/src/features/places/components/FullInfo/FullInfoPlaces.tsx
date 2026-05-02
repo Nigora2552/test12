@@ -6,7 +6,7 @@ import {useEffect} from "react";
 import {getAllPlaces} from "../../placesThunk.ts";
 import {getReviews} from "../../../reviews/reviewsThunk.ts";
 import {getAllImages} from "../../../images/imagesThunk.ts";
-import {Box, CircularProgress} from "@mui/material";
+import { CircularProgress} from "@mui/material";
 import InfoAboutPlace from "./InfoAboutPlace.tsx";
 
 const FullInfoPlaces = () => {
@@ -36,6 +36,9 @@ const FullInfoPlaces = () => {
             <h3 style={{textAlign: 'center'}}>Gallery</h3>
             {images && images.length > 0 &&
             <>
+                {images.map(img => (
+                    <Image key={img._id} img={img}/>
+                ))}
             </>
             }
         </div>
